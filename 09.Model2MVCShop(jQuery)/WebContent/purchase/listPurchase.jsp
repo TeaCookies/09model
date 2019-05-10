@@ -35,7 +35,7 @@
 		});
 		
 		$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
-		$( ".ct_list_pop td:nth-child(5)" ).css("color" , "red");
+		$( " .ct_list_pop td:nth-child(5)" ).css("font-weight" , "bold");
 			
 		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
 			//console.log ( $(".ct_list_pop:nth-child(1)" ).html() );
@@ -78,7 +78,7 @@
 				<tr>
 					<td class="ct_list_b" width="50">No</td>
 					<td class="ct_line02"></td>
-					<td class="ct_list_b" width="150">구매날짜</td>
+					<td class="ct_list_b" width="150">주문번호</td>
 					<td class="ct_line02"></td>
 					<td class="ct_list_b" width="150">상품명</td>
 					<td class="ct_line02"></td>
@@ -98,7 +98,7 @@
 						<tr class="ct_list_pop">
 						<td align="center">${ i }</a></td>
 						<td></td>
-						<td align="center">${purchase.orderDate}
+						<td align="center">${purchase.orderDate}-${purchase.tranNo}
 							<input type="hidden" name="tranNo" value="${purchase.tranNo}"/></td>
 						<td></td>
 						<td align="center" >${purchase.purchaseProd.prodName }

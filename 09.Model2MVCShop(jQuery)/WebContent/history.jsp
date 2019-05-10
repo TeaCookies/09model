@@ -6,7 +6,20 @@
 <head>
 
 <title>열어본 상품 보기</title>
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
 
+	$(function() {	
+		
+		
+		//$( "td.ct_btn01:contains('취소')" ).on("click" , function() {
+			self.location = "/product/getProduct?prodNo=<%=h[i]%>&menu=search";
+		});
+
+	});
+	
+	
+</script>
 </head>
 <body>
 	당신이 열어본 상품을 알고 있다
