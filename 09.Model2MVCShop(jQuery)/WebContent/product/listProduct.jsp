@@ -159,7 +159,7 @@
 							판매완료
 					 	
 						<c:if test="${param.menu =='manage'}">
-							배송하기
+							[배송하기]
 						</c:if>
 					</c:when>
 							
