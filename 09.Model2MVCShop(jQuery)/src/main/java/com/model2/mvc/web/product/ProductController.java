@@ -2,6 +2,7 @@ package com.model2.mvc.web.product;
 
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.common.UploadFile;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
 
@@ -33,6 +36,9 @@ public class ProductController {
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
 	//setter Method 구현 않음
+	
+	@Resource(name = "uploadPath")
+	private String uploadPath;
 		
 	public ProductController(){
 		System.out.println(this.getClass());
@@ -62,14 +68,14 @@ public class ProductController {
 	
 
 	@RequestMapping( value="addProduct", method=RequestMethod.POST )
-	public ModelAndView addUser( @ModelAttribute("product") Product product ) throws Exception {
+	public ModelAndView addUser( @ModelAttribute("product") Product product,
+											MultipartHttpServletRequest mtfRequest ) throws Exception {
 
 		System.out.println("/product/addProduct : POST");
 
-		System.out.println("디버깅■■■■■■■■■■■■■■■■■"+product);
 		//Business Logic
+		product.setFileName(UploadFile.saveFile(mtfRequest.getFile("file"),uploadPath));
 		productService.addProduct(product);
-		
 		
 		
 		ModelAndView modelAndView = new ModelAndView();

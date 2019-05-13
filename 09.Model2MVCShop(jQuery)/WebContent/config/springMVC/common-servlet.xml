@@ -83,6 +83,26 @@
 		
 	</bean> -->
 	
+	
+		<!--  ::  Muiltpart 객체를 컨트롤러에 전달하는 역할 + max용량 설정-->	
+	<bean id="multipartResolver" 
+				class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+		<property name="maxUploadSize" value="10485760"/>
+		<property name="maxInMemorySize" value="100000000"/>
+	</bean>
+	
+	
+	<!--  :: 파일 업로드 경로 설정 -->	
+	<bean id="uploadPath" class="java.lang.String">
+		<constructor-arg 
+				value="C:\Users\bitcamp\git\09model\09.Model2MVCShop(jQuery)\WebContent\images\uploadFiles\"/>
+	</bean>
+	
+	
+	
+	
+	
+	
 
 	 <!-- /////// Client 에서 전달되는 JSON Data 를 Domain Object 롤 변환 받기위한 설정 ///////-->
 	<bean id="jsonConverter"	class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
@@ -97,6 +117,8 @@
 			</list>
 		</property>	 
 	 </bean>
+	 
+
 
 
 	 <!-- /////// Client 로 전달되는 Domain Object  를 JSON Data  변환위한 설정            /////// -->

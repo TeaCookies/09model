@@ -30,11 +30,8 @@
 		$("h7").css("color" , "red");
 			
 		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
-			//console.log ( $(".ct_list_pop:nth-child(1)" ).html() );
-		
+	
 		$( "td:contains('배송하기')" ).on("click" , function() {
-			//self.location ="/purchase/updateTranCode?prodNo="+$( ".ct_list_pop td:nth-child(9)").children().val()+"&tranCode=${product.proTranCode}";
-			
 			self.location ="/purchase/updateTranCode?prodNo="+$(this).parent().children("td:nth-child(3)").children().val()+"&tranCode="+$(this).parent().children("td:nth-child(9)").children().val();
 			console.log ( "확인1 :: "+$(this).parent().children("td:nth-child(3)").children().val() );
 			console.log ( "확인2 :: "+$(this).parent().children("td:nth-child(9)").children().val() );
