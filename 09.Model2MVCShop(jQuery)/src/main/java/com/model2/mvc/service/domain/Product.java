@@ -17,15 +17,15 @@ public class Product {
 	private int prodNo;
 	private Date regDate;
 	private String proTranCode;
-	private MultipartFile upload;
-	
-	public MultipartFile getUpload() {
-		return upload;
-	}
-
-	public void setUpload(MultipartFile upload) {
-		this.upload = upload;
-	}
+//	private MultipartFile upload;
+//	
+//	public MultipartFile getUpload() {
+//		return upload;
+//	}
+//
+//	public void setUpload(MultipartFile upload) {
+//		this.upload = upload;
+//	}
 
 	public Product(){
 	}

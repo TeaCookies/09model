@@ -56,13 +56,13 @@ public class PurchaseController {
 	
 	//get
 	//@RequestMapping("/addPurchaseView.do")
-	@RequestMapping( value="addPurchaseView", method=RequestMethod.GET)
-	public String addPurchaseView(@ModelAttribute("purchase") Purchase purchase, 
+	@RequestMapping( value="addPurchase", method=RequestMethod.GET)
+	public String addPurchase(@ModelAttribute("purchase") Purchase purchase, 
 												@RequestParam("prodNo") int prodNo,
 												Model model, 
 												HttpSession session) throws Exception {
 
-		System.out.println("/purchase/addPurchaseView : GET");
+		System.out.println("/purchase/addPurchase : GET");
 
 		purchase.setPurchaseProd(productService.getProduct(prodNo));
 		purchase.setBuyer((User)session.getAttribute("user"));
@@ -103,9 +103,7 @@ public class PurchaseController {
 		System.out.println("/purchase/getPurchase : GET");
 		
 		//Business Logic
-		
 		Purchase purchase = purchaseService.getPurchase(tranNo);
-		
 		// Model 과 View 연결
 		model.addAttribute("purchase", purchase);
 		
@@ -116,11 +114,11 @@ public class PurchaseController {
 
 	
 	//@RequestMapping("/updatePurchaseView.do")
-	@RequestMapping( value="updatePurchaseView", method=RequestMethod.GET)
-	public String updatePurchaseView( @RequestParam("tranNo") int tranNo , 
+	@RequestMapping( value="updatePurchase", method=RequestMethod.GET)
+	public String updatePurchase( @RequestParam("tranNo") int tranNo , 
 																			Model model ) throws Exception{
 
-		System.out.println("/purchase/updatePurchaseView : GET");
+		System.out.println("/purchase/updatePurchase : GET");
 		//Business Logic
 		Purchase purchase = purchaseService.getPurchase(tranNo);
 		// Model 과 View 연결
@@ -158,25 +156,18 @@ public class PurchaseController {
 
 		System.out.println("/purchase/updateTranCode : GET");
 		
-		System.out.println("컨트롤러에서 prodNo 확인■■■■■■■■■ "+prodNo);
-		
 		Product product = productService.getProduct(prodNo);
 		purchase = purchaseService.getPurchase2(prodNo);
-		
-		System.out.println("컨트롤러에서 purchase 확인 ::: ■■■■■■■■■ "+purchase);
 	
 		if (tranCode.trim().equals("1")) {
 			product.setProTranCode("2");
 		} else if (tranCode.trim().equals("2")) {
 			product.setProTranCode("3");
-		}	
+		} else if (tranCode.trim().equals("3")) {
+			product.setProTranCode("0");
+		}		
 		
-		System.out.println("컨트롤러에서 프로트랜코드 확인■■■■■■■■■ "+product.getProTranCode());
-		
-		System.out.println("컨트롤러에서 purchase 확인■■■■■■■■■ "+purchase);
 		purchase.setTranCode(product.getProTranCode());
-		
-		System.out.println("컨트롤러에서 트랜코드 확인■■■■■■■■■ "+purchase.getTranCode());
 		
 		//Business Logic
 		purchaseService.updateTranCode(purchase);
@@ -219,6 +210,9 @@ public class PurchaseController {
 		
 		return "forward:/purchase/listPurchase.jsp";
 	}
+	
+	
+	
 	
 	
 	

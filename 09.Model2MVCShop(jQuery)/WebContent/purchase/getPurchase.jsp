@@ -15,7 +15,7 @@
 	$(function() {
 		
 		$( "td.ct_btn01:contains('¼öÁ¤')" ).on("click" , function() {
-			self.location = "/purchase/updatePurchaseView?tranNo=${purchase.tranNo}";
+			self.location = "/purchase/updatePurchase?tranNo=${purchase.tranNo}";
 		});
 		
 		

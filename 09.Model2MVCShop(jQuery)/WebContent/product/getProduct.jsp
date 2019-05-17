@@ -24,7 +24,7 @@
 		});
 		
 		$( "td.ct_btn01:contains('±¸¸Å')" ).on("click" , function() {
-			self.location = "/purchase/addPurchaseView?prodNo=${product.prodNo}";
+			self.location = "/purchase/addPurchase?prodNo=${product.prodNo}";
 		});
 	});
 	

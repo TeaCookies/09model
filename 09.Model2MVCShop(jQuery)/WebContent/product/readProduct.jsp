@@ -18,7 +18,7 @@
 	
 	$(function() {	
 		 $( "td.ct_btn01:contains('추가등록')" ).on("click" , function() {
-			self.location ="/product/addProductView";
+			self.location ="/product/addProduct";
 		});
 	});	
 

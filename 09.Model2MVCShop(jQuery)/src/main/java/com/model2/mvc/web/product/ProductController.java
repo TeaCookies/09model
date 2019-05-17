@@ -37,9 +37,10 @@ public class ProductController {
 	private ProductService productService;
 	//setter Method 구현 않음
 	
-	@Resource(name = "uploadPath")
-	private String uploadPath;
-		
+//	@Resource(name = "uploadPath")
+//	private String uploadPath;
+
+	
 	public ProductController(){
 		System.out.println(this.getClass());
 	}
@@ -47,18 +48,21 @@ public class ProductController {
 	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml 참조 할것
 	//==> 아래의 두개를 주석을 풀어 의미를 확인 할것
 	@Value("#{commonProperties['pageUnit']}")
+	//@Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
 	
 	@Value("#{commonProperties['pageSize']}")
+	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
 	
 	
 	
-	@RequestMapping( value="addProductView", method=RequestMethod.GET )
-	public String addProductView() throws Exception {
+	//@RequestMapping("/addProductView.do")
+	@RequestMapping( value="addProduct", method=RequestMethod.GET )
+	public String addProduct() throws Exception {
 
-		System.out.println("/product/addProductView : GET");
+		System.out.println("/product/addProduct : GET");
 		
 		return "forward:/product/addProductView.jsp";
 	}
@@ -66,28 +70,24 @@ public class ProductController {
 
 	
 	
-
+	//@RequestMapping("/addProduct.do")
 	@RequestMapping( value="addProduct", method=RequestMethod.POST )
-	public ModelAndView addUser( @ModelAttribute("product") Product product,
-											MultipartHttpServletRequest mtfRequest ) throws Exception {
+	public String addUser( @ModelAttribute("product") Product product,
+											MultipartHttpServletRequest mtfRequest) throws Exception {
 
 		System.out.println("/product/addProduct : POST");
 
 		//Business Logic
-		product.setFileName(UploadFile.saveFile(mtfRequest.getFile("file"),uploadPath));
+		//product.setFileName(UploadFile.saveFile(mtfRequest.getFile("file"),uploadPath));
 		productService.addProduct(product);
 		
-		
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/product/readProduct.jsp");
-		
-		return modelAndView;
+		return "forward:/product/readProduct.jsp";
 	}
 	
 	
 	
 	
-
+	//@RequestMapping("/getProduct.do")
 	@RequestMapping( value="getProduct", method=RequestMethod.GET)
 	public String getProduct( @RequestParam("prodNo") int prodNo , 
 								@RequestParam("menu") String menu,
@@ -104,7 +104,7 @@ public class ProductController {
 		
 		
 		if ( menu.equals("manage") ) {
-			return "forward:/product/updateProductView";
+			return "forward:/product/updateProduct";
 			
 		} else {
 			if ( cookie != null ) {
@@ -125,45 +125,42 @@ public class ProductController {
 	
 	
 	
-	@RequestMapping( value="updateProductView", method=RequestMethod.GET)
-	public ModelAndView updateProductView( @RequestParam("prodNo") int prodNo ) throws Exception{
+	//@RequestMapping("/updateProductView.do")
+	@RequestMapping( value="updateProduct", method=RequestMethod.GET)
+	public String updateProduct( @RequestParam("prodNo") int prodNo , Model model) throws Exception{
 
-		System.out.println("/product/updateProductView : GET");
+		System.out.println("/product/updateProduct : GET");
 		//Business Logic
 		Product product = productService.getProduct(prodNo);
-
 		// Model 과 View 연결
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/product/updateProduct.jsp");
-		modelAndView.addObject("product", product);
+		model.addAttribute("product", product);
 		
-		return modelAndView;
+		return "forward:/product/updateProduct.jsp";
 	}
 	
 	
 	
 	
+	//@RequestMapping("/updateProduct.do")
 	@RequestMapping( value="updateProduct" , method=RequestMethod.POST)
-	public ModelAndView updateProduct( @ModelAttribute("product") Product product) throws Exception{
+	public String updateProduct( @ModelAttribute("product") Product product, Model model) throws Exception{
 
 		System.out.println("/product/updateProduct : POST");
 		//Business Logic
 		productService.updateProduct(product);
 		product = productService.getProduct(product.getProdNo());
 		
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/product/getProduct.jsp?prodNo="+product.getProdNo());
-		modelAndView.addObject("product", product);
+		model.addAttribute("product", product);
 		
-		return modelAndView;
+		return "forward:/product/getProduct.jsp?prodNo="+product.getProdNo();
 	}
 	
 	
 	
 	
-
+	//@RequestMapping("/listProduct.do")
 	@RequestMapping( value="listProduct" )
-	public ModelAndView listProduct( @ModelAttribute("search") Search search ) throws Exception{
+	public String listProduct( @ModelAttribute("search") Search search, Model model ) throws Exception{
 		
 		System.out.println("/product/listProduct : GET / POST");
 		
@@ -180,13 +177,11 @@ public class ProductController {
 		System.out.println(resultPage);
 		
 		// Model 과 View 연결
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/product/listProduct.jsp");
-		modelAndView.addObject("list", map.get("list"));
-		modelAndView.addObject("resultPage", resultPage);
-		modelAndView.addObject("search", search);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
 		
-		return modelAndView;
+		return "forward:/product/listProduct.jsp";
 	}
 	
 	
